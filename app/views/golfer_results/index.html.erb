@@ -1,0 +1,134 @@
+<div class="page-header">
+  <h1>
+    Golfer results
+    <a href="/golfer_results/new" class="btn btn-lg btn-success"><i class="fa fa-plus"></i></a>
+  </h1>
+</div>
+
+<!-- Responsive, Isotope-based layout example -->
+
+<div class="row">
+  <div class="col-xs-12">
+    <input type="text" id="quicksearch" placeholder="Search Golfer results (start typing)" class="form-control">
+  </div>
+</div>
+
+<hr>
+<form action="/update_leaderboard/<%= @tournament_id %>" class="form-horizontal" method ="post">
+          <!-- Hidden input for authenticity token to protect from forgery  action="/registertourney/< @tournament_id %>" method="post"-->
+          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+          <!-- All Tournaments -->
+          <div class="form-group">
+            <label for="tournament_id" class="col-sm-2 control-label">
+              Select Tournament
+            </label>
+            <div class="col-sm-6">
+              <%= select_tag(:tournament_id, options_from_collection_for_select(Tournament.order(name: :asc).all, :id, :name), :class => "form-control") %>
+            </div>
+
+            <div class="col-sm-4" class="form-actions">
+              <button class="btn btn-primary"  method="post">
+                Update Leaderboard
+              </button>
+
+              or
+              <a href="/">Cancel</a>
+
+            </div>
+          </div>
+        </form>
+  <hr>
+
+  <hr>
+    <table class="table table-hover">
+      <tr>
+      <th>Result ID</th>
+      <th>Tournament</th>
+      <th>Current Place</th>
+      <th>Current Score</th>
+      <th>Status</th>
+      <th>Current Payout</th>
+      <th>View</th>
+      <th>Edit</th>
+      <th>Delete</th>
+      </tr>
+
+      <% @golfer_results.each do |golfer_result| %>
+
+        <tr>
+
+          <td><%= golfer_result.id %></td>
+          <td><%= Tournament.find(golfer_result.tournament_id).name%></td>
+          <td><%= golfer_result.current_place %></td>
+          <td><%= golfer_result.total_score %></td>
+          <td><%= golfer_result.status %></td>
+          <td><%= golfer_result.current_payout %></td>
+          <td>
+                 <a href="/golfer_results/<%= golfer_result.id %>" class="btn btn-primary">
+                  <i class="fa fa-search-plus"></i>
+                </a>
+                </td>
+                <td>
+                <a href="/golfer_results/<%= golfer_result.id %>/edit" class="btn btn-warning">
+                 <i class="fa fa-edit"></i>
+                </a>
+                </td>
+              <td>
+                <a href="/delete_golfer_result/<%= golfer_result.id %>" class="btn btn-danger" rel="nofollow">
+                <i class="fa fa-trash-o"></i>
+                 </a>
+          </td>
+          </tr>
+
+      <% end %>
+      </table>
+
+
+<!-- You can ignore the following. It's a quick and dirty example of how to get a Pinterest-style layout with quick search. -->
+<!-- JavaScript for Isotope layout and quicksearch -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.1.8/imagesloaded.pkgd.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.0.0/isotope.pkgd.min.js"></script>
+<script>
+  $(function() {
+    // quick search regex
+    var qsRegex;
+
+    // init Isotope
+    var $container = $('.isotope-container');
+
+    $container.imagesLoaded(function() {
+      $container.isotope({
+        itemSelector: '.isotope-item',
+        layoutMode: 'masonry',
+        filter: function() {
+          return qsRegex ? $(this).text().match( qsRegex ) : true;
+        }
+      })
+    });
+
+    // use value of search field to filter
+    var $quicksearch = $('#quicksearch').keyup( debounce( function() {
+      qsRegex = new RegExp( $quicksearch.val(), 'gi' );
+      $container.isotope();
+    }, 200 ) );
+
+  });
+
+  // debounce so filtering doesn't happen every millisecond
+  function debounce( fn, threshold ) {
+    var timeout;
+    return function debounced() {
+      if ( timeout ) {
+        clearTimeout( timeout );
+      }
+      function delayed() {
+        fn();
+        timeout = null;
+      }
+      timeout = setTimeout( delayed, threshold || 100 );
+    }
+  }
+</script>
+
+<!-- End responsive, Isotope-based layout example -->

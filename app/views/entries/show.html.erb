@@ -1,0 +1,62 @@
+<!-- Responsive panel example-->
+
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Entry #<%= @entry.id %></h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-12">
+            <dl class="dl-horizontal">
+              <dt>Pool</dt>
+              <dd><%= @entry.pool.name %></dd>
+
+               <dt>Owner</dt>
+              <dd><%= @entry.user.userid%></dd>
+
+              <dt>Current payoff</dt>
+              <dd><%= @entry.current_payoff %></dd>
+
+              <dt>Current place</dt>
+              <dd><%= @entry.current_place %></dd>
+
+              <dt>Golfer a</dt>
+              <dd><%= Golfer.find(@entry.golfer_a).name + ' ' + Golfer.find(@entry.golfer_a).lastname %></dd>
+
+              <dt>Golfer b</dt>
+              <dd><%= Golfer.find(@entry.golfer_b).name + ' ' + Golfer.find(@entry.golfer_b).lastname %></dd>
+
+              <dt>Golfer c</dt>
+              <dd><%= Golfer.find(@entry.golfer_c).name + ' ' + Golfer.find(@entry.golfer_c).lastname %></dd>
+
+              <dt>Golfer d</dt>
+              <dd><%= Golfer.find(@entry.golfer_d).name + ' ' + Golfer.find(@entry.golfer_d).lastname %></dd>
+
+              <dt>Golfer flex</dt>
+              <dd><%= Golfer.find(@entry.golfer_flex).name + ' ' + Golfer.find(@entry.golfer_flex).lastname %></dd>
+
+
+            </dl>
+            <div class="btn-group btn-group-justified">
+              <a href="/entries" class="btn btn-primary">
+                <i class="fa fa-chevron-left"></i>
+              </a>
+
+              <a href="/entries/<%= @entry.id %>/edit" class="btn btn-warning">
+                <i class="fa fa-edit"></i>
+              </a>
+
+              <a href="/delete_entry/<%= @entry.id %>" class="btn btn-danger" rel="nofollow">
+                <i class="fa fa-trash-o"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End responsive panel example -->

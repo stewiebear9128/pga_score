@@ -1,0 +1,91 @@
+<!-- Validation failure messages -->
+
+<% if @golfer_result.errors.any? %>
+  <% @golfer_result.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<!-- Responsive panel example -->
+
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Edit Golfer Result #<%= @golfer_result.id %></h3>
+      </div>
+      <div class="panel-body">
+        <form action="/update_golfer_result/<%= @golfer_result.id %>" method="post" class="form-horizontal">
+          <!-- Hidden input for authenticity token to protect from forgery -->
+          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+          <!-- Label and input for current_payout -->
+          <div class="form-group">
+            <label for="current_payout" class="col-sm-2 control-label">
+              Current payout
+            </label>
+            <div class="col-sm-10">
+              <input type="text" id="current_payout" name="current_payout" placeholder="Current payout" class="form-control" value="<%= @golfer_result.current_payout %>">
+            </div>
+          </div>
+
+          <!-- Label and input for total_score -->
+          <div class="form-group">
+            <label for="total_score" class="col-sm-2 control-label">
+              Total score
+            </label>
+            <div class="col-sm-10">
+              <input type="text" id="total_score" name="total_score" placeholder="Total score" class="form-control" value="<%= @golfer_result.total_score %>">
+            </div>
+          </div>
+
+          <!-- Label and input for current_place -->
+          <div class="form-group">
+            <label for="current_place" class="col-sm-2 control-label">
+              Current place
+            </label>
+            <div class="col-sm-10">
+              <input type="text" id="current_place" name="current_place" placeholder="Current place" class="form-control" value="<%= @golfer_result.current_place %>">
+            </div>
+          </div>
+
+          <!-- Label and input for tournament_id -->
+          <div class="form-group">
+            <label for="tournament_id" class="col-sm-2 control-label">
+              Tournament
+            </label>
+            <div class="col-sm-10">
+              <input type="text" id="tournament_id" name="tournament_id" placeholder="Tournament" class="form-control" value="<%= @golfer_result.tournament_id %>">
+            </div>
+          </div>
+
+          <!-- Label and input for golfer_id -->
+          <div class="form-group">
+            <label for="golfer_id" class="col-sm-2 control-label">
+              Golfer
+            </label>
+            <div class="col-sm-10">
+              <input type="text" id="golfer_id" name="golfer_id" placeholder="Golfer" class="form-control" value="<%= @golfer_result.golfer_id %>">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button class="btn btn-warning">
+                Update Golfer Result
+              </button>
+              or
+              <a href="/golfer_results/<%= @golfer_result.id %>">Cancel</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- End responsive panel example -->

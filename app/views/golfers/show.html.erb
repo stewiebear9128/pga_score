@@ -1,0 +1,65 @@
+<!-- Responsive panel example-->
+
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Golfer #<%= @golfer.id %></h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-12">
+            <dl class="dl-horizontal">
+              <dt>Picture</dt>
+              <dd><%= @golfer.picture %></dd>
+
+              <dt>First Name</dt>
+              <dd><%= @golfer.name %></dd>
+
+              <dt>Last Name</dt>
+              <dd><%= @golfer.lastname %></dd>
+
+              <dt>Country</dt>
+              <dd><%= @golfer.country %></dd>
+
+              <dt>College</dt>
+              <dd><%= @golfer.college %></dd>
+
+              <dt>Height</dt>
+              <dd><%= @golfer.height %></dd>
+
+              <dt>Weight</dt>
+              <dd><%= @golfer.weight %></dd>
+
+              <dt>Age | Birthday</dt>
+              <dd><%= (Time.now.to_s(:number).to_i - @golfer.birthday.to_time.to_s(:number).to_i)/10e9.to_i %> | <%= @golfer.birthday %></dd>
+
+              <dt>Birthplace</dt>
+              <dd><%= @golfer.birthplace %></dd>
+
+              <dt>Years Pro</dt>
+              <dd><%= Date.today.year - @golfer.turned_pro %></dd>
+
+
+            </dl>
+            <div class="btn-group btn-group-justified">
+              <a href="/golfers" class="btn btn-primary">
+                <i class="fa fa-chevron-left"></i>
+              </a>
+
+              <a href="/golfers/<%= @golfer.id %>/edit" class="btn btn-warning">
+                <i class="fa fa-edit"></i>
+              </a>
+
+              <a href="/delete_golfer/<%= @golfer.id %>" class="btn btn-danger" rel="nofollow">
+                <i class="fa fa-trash-o"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End responsive panel example -->

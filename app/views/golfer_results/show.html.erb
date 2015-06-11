@@ -1,0 +1,49 @@
+<!-- Responsive panel example-->
+
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Golfer Result #<%= @golfer_result.id %></h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-12">
+            <dl class="dl-horizontal">
+              <dt>Current payout</dt>
+              <dd><%= @golfer_result.current_payout %></dd>
+
+              <dt>Total score</dt>
+              <dd><%= @golfer_result.total_score %></dd>
+
+              <dt>Current place</dt>
+              <dd><%= @golfer_result.current_place %></dd>
+
+              <dt>Tournament</dt>
+              <dd><%= @golfer_result.tournament_id %></dd>
+
+              <dt>Golfer</dt>
+              <dd><%= @golfer_result.golfer_id %></dd>
+
+            </dl>
+            <div class="btn-group btn-group-justified">
+              <a href="/golfer_results" class="btn btn-primary">
+                <i class="fa fa-chevron-left"></i>
+              </a>
+
+              <a href="/golfer_results/<%= @golfer_result.id %>/edit" class="btn btn-warning">
+                <i class="fa fa-edit"></i>
+              </a>
+
+              <a href="/delete_golfer_result/<%= @golfer_result.id %>" class="btn btn-danger" rel="nofollow">
+                <i class="fa fa-trash-o"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End responsive panel example -->

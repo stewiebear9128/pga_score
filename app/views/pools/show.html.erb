@@ -1,0 +1,95 @@
+<!-- Responsive panel example-->
+
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Pool #<%= @pool.id %></h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-12">
+            <dl class="dl-horizontal">
+              <dt>Tournament</dt>
+              <dd><%= @pool.tournament.name %></dd>
+
+              <dt>Owner</dt>
+              <dd><%= @pool.user.userid %></dd>
+
+              <dt>Name</dt>
+              <dd><%= @pool.name %></dd>
+
+            </dl>
+            <div class="btn-group btn-group-justified">
+              <a href="/pools" class="btn btn-primary">
+                <i class="fa fa-chevron-left"></i>
+              </a>
+
+              <a href="/pools/<%= @pool.id %>/edit" class="btn btn-warning">
+                <i class="fa fa-edit"></i>
+              </a>
+
+              <a href="/delete_pool/<%= @pool.id %>" class="btn btn-danger" rel="nofollow">
+                <i class="fa fa-trash-o"></i>
+              </a>
+              <a href="/update_pool_results/<%= @pool.id %>" class="btn btn-primary">
+                Update Results
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+
+<table class="table table-hover">
+<tr>
+<th>Current Place</th>
+<th>Entry Owner</th>
+<th>Pool</th>
+<th>Current Payoff</th>
+<th>Flight A Golfer</th>
+<th>Flight B Golfer</th>
+<th>Flight C Golfer</th>
+<th>Flight D Golfer</th>
+<th>Flex Golfer</th>
+<th>View</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+<% Entry.where(:pool_id=>@pool.id).order(current_place: :asc).each do |entry| %>
+  <tr>
+  <td><%= entry.current_place%></td>
+  <td><%= entry.user.userid%></td>
+  <td><%= entry.pool.name%></td>
+  <td><%= entry.current_payoff %></td>
+  <td><%= Golfer.find(entry.golfer_a).lastname %></td>
+  <td><%= Golfer.find(entry.golfer_b).lastname %></td>
+  <td><%= Golfer.find(entry.golfer_c).lastname %></td>
+  <td><%= Golfer.find(entry.golfer_d).lastname %></td>
+  <td><%= Golfer.find(entry.golfer_flex).lastname %></td>
+  <td>
+      <a href="/entries/<%= entry.id %>" class="btn btn-primary">
+            <i class="fa fa-search-plus"></i>
+          </a>
+  </td>
+  <td>
+      <a href="/entries/<%= entry.id %>/edit" class="btn btn-warning">
+            <i class="fa fa-edit"></i>
+          </a>
+  </td>
+  <td>
+      <a href="/delete_entry/<%= entry.id %>" class="btn btn-danger" rel="nofollow">
+            <i class="fa fa-trash-o"></i>
+          </a>
+  </td>
+  </tr>
+        </dl>
+
+
+<% end %>
+</table>
+
+<!-- End responsive panel example -->
