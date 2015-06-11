@@ -88,7 +88,13 @@ class GolferResultsController < ApplicationController
             #create an array of all registrations for a tournament [reg_id, current place, payoff]
             @result_tourn = GolferResult.where(tournament_id: @tournament).order(current_place:  :asc)
             #create an array of all payoffs for this tournament []
-            @payoff_tourn = Payoff.where(tournament_id: @tournament)
+            #determines if tourney is special payout or standard, if special (id=22 and is masters, otherwise ID=1)
+            if @tournament == 22
+              @payoff_tourn = Payoff.where(tournament_id: @tournament)
+            else
+              @payoff_tourn = Payoff.where(tournament_id: 1)
+            end
+
 
 
             #k = 1 #occurrance counter
@@ -99,7 +105,7 @@ class GolferResultsController < ApplicationController
             #loop through all results_tourn.
             @result_tourn.each do |place|
 
-              if  place.current_place+1 <=@result_tourn.size
+              if  place.current_place+2 <= @result_tourn.length
               duplicate = (place.current_place == @result_tourn.find(place.id + 1).current_place)
             else
               duplicate = false
@@ -129,7 +135,7 @@ class GolferResultsController < ApplicationController
                 #there is a bug here, the conditional below will evaluate to false after the first duplicate
               elsif place.current_place >= j
                 @up = GolferResult.find(place.id)
-                @up.current_payout = @payoff_tourn.find_by!(:place => place.current_place).payout
+                @up.current_payout = @payoff_tourn.find_by(:place => place.current_place).payout
                 @up.save
                 j = place.current_place + 1
               end
