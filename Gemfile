@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'sportsdata', '~> 1.20.5'
 gem 'devise'
 
 #xml parser
@@ -9,10 +8,15 @@ gem 'nokogiri', '~> 1.6.6.2'
 gem 'database_cleaner'
 
 gem 'starter_generators', :git => "http://github.com/rbetina/starter_generators.git", :branch => "simple"
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+
+group :production, :staging do
+  gem "pg"
+end
+
+group :development, :test do
+  gem "sqlite3"
+end
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
