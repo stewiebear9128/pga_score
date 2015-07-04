@@ -54,7 +54,7 @@
       <th>Delete</th>
       </tr>
 
-      <% @golfer_results.each do |golfer_result| %>
+      <% @golfer_results.order(current_place:  :asc).each do |golfer_result| %>
 
         <tr>
 

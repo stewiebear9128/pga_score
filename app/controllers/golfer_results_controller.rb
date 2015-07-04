@@ -59,8 +59,8 @@ class GolferResultsController < ApplicationController
     tourney_key = Tournament.find(@tournament).key
 
     #go call the correct result tab for the tourney
-        doc = Nokogiri::HTML(open("http://api.sportradar.us/golf-t1/leaderboard/pga/2015/tournaments/" + tourney_key.to_s + "/leaderboard.xml?api_key=tetacypru34zx64bb7b98hxs"))
-        #doc = Nokogiri::HTML(open(Rails.root.join('lib', 'assets', 'tournamentlbresponse_masters.html')))
+        #doc = Nokogiri::HTML(open("http://api.sportradar.us/golf-t1/leaderboard/pga/2015/tournaments/" + tourney_key.to_s + "/leaderboard.xml?api_key=tetacypru34zx64bb7b98hxs"))
+        doc = Nokogiri::HTML(open(Rails.root.join('lib', 'assets', 'tournamentlbresponse_open.html')))
 
           doc.xpath("//player").each do |player|
 
@@ -83,6 +83,7 @@ class GolferResultsController < ApplicationController
 
                   result.save
             end
+          end #added
 
             #update payoffs
             #create an array of all registrations for a tournament [reg_id, current place, payoff]
@@ -107,13 +108,16 @@ class GolferResultsController < ApplicationController
 
               if  place.current_place+2 <= @result_tourn.length
               duplicate = (place.current_place == @result_tourn.find(place.id + 1).current_place)
-            else
+              else
               duplicate = false
-            end
+              end
+
+            #if player is cut or WD, then make their payout 0
              if place.status != nil
                 @up = GolferResult.find(place.id)
                 @up.current_payout = 0.0
                 @up.save
+            #
               elsif duplicate
                 #idenfity how many times it duplicates
                 times = @result_tourn.group(:current_place).where(:current_place => place.current_place).count
@@ -143,7 +147,7 @@ class GolferResultsController < ApplicationController
             end
 
 
-        end
+        #removed here
 
     redirect_to "/golfer_results", :notice=> "Tournament leaderboard updated for: " + Tournament.find(@tournament).name
   end
